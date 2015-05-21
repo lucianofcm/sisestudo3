@@ -74,7 +74,7 @@ app.controller('personsListController', function ($scope, $rootScope, personServ
 });
 
 // Create a controller with name personsFormController to bind to the form section.
-app.controller('personsFormController', function ($scope, $rootScope, personService) {
+app.controller('personsFormController', function ($scope, $rootScope, personService,materiaService) {
     // Clears the form. Either by clicking the 'Clear' button in the form, or when a successfull save is performed.
     $scope.clearForm = function () {
         $scope.person = null;
@@ -108,6 +108,8 @@ app.controller('personsFormController', function ($scope, $rootScope, personServ
     $scope.updateMateria = function () {
         materiaService.save($scope.materia).$promise.then(
             function () {
+            	
+            	alert("Teste");
                 // Broadcast the event to refresh the grid.
                 $rootScope.$broadcast('refreshGrid');
                 // Broadcast the event to display a save message.

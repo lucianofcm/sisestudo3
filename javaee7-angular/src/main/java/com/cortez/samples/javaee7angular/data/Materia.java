@@ -25,7 +25,15 @@ public class Materia {
 	@SequenceGenerator(name = "id", sequenceName = "id")
 	private Long id;
    
-    private String nome;
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	private String nome;
     private String descricao;
     private List<Assunto> assuntos;
     

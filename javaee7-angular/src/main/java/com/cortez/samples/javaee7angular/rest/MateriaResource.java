@@ -1,7 +1,7 @@
 package com.cortez.samples.javaee7angular.rest;
 
 import com.cortez.samples.javaee7angular.data.Materia;
-import com.cortez.samples.javaee7angular.data.Person;
+import com.cortez.samples.javaee7angular.data.Materia;
 import com.cortez.samples.javaee7angular.pagination.PaginatedListWrapper;
 
 import javax.ejb.Stateless;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Stateless
 @ApplicationPath("/resources")
-@Path("materias")
+@Path("materia")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MateriaResource extends Application {
@@ -29,7 +29,7 @@ public class MateriaResource extends Application {
     private EntityManager entityManager;
 
     private Integer countMaterias() {
-        Query query = entityManager.createQuery("SELECT COUNT(p.id) FROM Person p");
+        Query query = entityManager.createQuery("SELECT COUNT(p.id) FROM MATERIA p");
         return ((Long) query.getSingleResult()).intValue();
     }
 
@@ -73,32 +73,30 @@ public class MateriaResource extends Application {
 
     @GET
     @Path("{id}")
-    public Person getMateria(@PathParam("id") Long id) {
-        return entityManager.find(Person.class, id);
+    public Materia getMateria(@PathParam("id") Long id) {
+        return entityManager.find(Materia.class, id);
     }
 
     @POST
-    public Person saveMateria(Person person) {
-        if (person.getId() == null) {
-            Person personToSave = new Person();
-            personToSave.setName(person.getName());
-            personToSave.setDescription(person.getDescription());
-            personToSave.setImageUrl(person.getImageUrl());
-            entityManager.persist(person);
+    public Materia saveMateria(Materia materia) {
+        if (materia.getId() == null) {
+            Materia materiaToSave = new Materia();
+            materiaToSave.setNome(materia.getNome());
+            materiaToSave.setDescricao(materia.getDescricao());
+                   entityManager.persist(materia);
         } else {
-            Person personToUpdate = getMateria(person.getId());
-            personToUpdate.setName(person.getName());
-            personToUpdate.setDescription(person.getDescription());
-            personToUpdate.setImageUrl(person.getImageUrl());
-            person = entityManager.merge(personToUpdate);
+            Materia materiaToUpdate = getMateria(materia.getId());
+            materiaToUpdate.setNome(materia.getNome());
+            materiaToUpdate.setDescricao(materia.getDescricao());
+            materia = entityManager.merge(materiaToUpdate);
         }
 
-        return person;
+        return materia;
     }
 
     @DELETE
     @Path("{id}")
-    public void deletePerson(@PathParam("id") Long id) {
+    public void deleteMateria(@PathParam("id") Long id) {
         entityManager.remove(getMateria(id));
     }
 }
